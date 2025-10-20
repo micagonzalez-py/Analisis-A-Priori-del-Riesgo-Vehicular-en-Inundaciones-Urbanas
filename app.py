@@ -24,8 +24,8 @@ DEFAULTS = {
 st.set_page_config(page_title="Simulador de Flotación y Deslizamiento", layout="wide")
 st.title("Análisis A Priori: Flotación y Deslizamiento Vehicular")
 st.markdown(
-    "Escaneá el QR, completá parámetros y obtené el diagnóstico inmediato. "
-    "Interfaz optimizada para móvil y desktop."
+    "Escaneá el QR, completá parámetros y obtené el diagnóstico inmediato (En la esquina superior izquierda puede acceder a los parámetros). "
+    
 )
 
 # --- SIDEBAR: parámetros del vehículo (permite guardar defaults) ---
@@ -161,4 +161,5 @@ buf = io.BytesIO()
 fig.savefig(buf, format="png", dpi=150)
 buf.seek(0)
 st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+
 
