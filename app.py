@@ -84,7 +84,7 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     # Colormap
     cmap_riesgo = LinearSegmentedColormap.from_list(
         "riesgo_soft",
-        ["#A8C686","#BFD88E", "#F4F1BB", "#f2a096", "#e0786c"]
+        ["#A8C686", "#F4F1BB", "#f2a096", "#e0786c"]
     )
 
     # --- FIGURA
@@ -161,5 +161,6 @@ buf = io.BytesIO()
 fig.savefig(buf, format="png", dpi=150)
 buf.seek(0)
 st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+
 
 
