@@ -56,8 +56,14 @@ area_frontal = alto_auto * ancho_auto
 peso = masa_auto * g
 
 # Función que genera todo (plots + diagnóstico) - adaptada de tu código
+import matplotlib.image as mpimg
+
 def generar_plots_y_texto(altura_agua, velocidad_agua):
-    # fuerzas
+    # Cargar imágenes (asegúrate de que estén en el mismo directorio)
+    img_encabezado = mpimg.imread("encabezado.png")
+    img_pie = mpimg.imread("pie.png")
+
+    # --- cálculos (idénticos a tu versión original) ---
     altura_sumergida = max(0, altura_agua - altura_libre_suelo)
     volumen_desplazado = altura_sumergida * area_base
     empuje = densidad_agua * g * volumen_desplazado * porcentaje_flotante
@@ -68,7 +74,6 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     se_mueve = fuerza_arrastre > friccion
     se_flota = empuje > peso
 
-    # Mapa
     alturas = np.linspace(0.01, 1.8, 200)
     velocidades = np.linspace(0.01, 6.0, 200)
     A, V = np.meshgrid(alturas, velocidades)
@@ -81,17 +86,21 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     riesgo_arrastre = np.clip(arrastre_grid / (friccion_grid + 1e-9), 0, 3)
     riesgo_empuje = np.clip(empuje_grid / (peso + 1e-9), 0, 2)
 
-    # Colormap
     cmap_riesgo = LinearSegmentedColormap.from_list(
-        "riesgo_soft",
-        ["#C5E26A", "#F4F1BB", "#f2a096", "#e0786c"]
+        "riesgo_soft", ["#C5E26A", "#F4F1BB", "#f2a096", "#e0786c"]
     )
 
-    # --- FIGURA
-    fig, axes = plt.subplots(3, 1, figsize=(7, 11), gridspec_kw={'height_ratios':[1.1,1,1]}, constrained_layout=True)
-    ax0, ax1, ax2 = axes
+    # --- NUEVO: 5 subplots (encabezado, barras, mapa1, mapa2, pie) ---
+    fig, axes = plt.subplots(5, 1, figsize=(7, 15),
+                             gridspec_kw={'height_ratios': [0.7, 1.1, 1, 1, 0.7]},
+                             constrained_layout=True)
+    ax_encabezado, ax0, ax1, ax2, ax_pie = axes
 
-    # barras
+    # Mostrar imagen encabezado
+    ax_encabezado.imshow(img_encabezado)
+    ax_encabezado.axis("off")
+
+    # Gráfico de barras
     labels = ['Peso', 'F. Empuje', 'F. Fricción', 'F. Arrastre']
     values = [peso, empuje, friccion, fuerza_arrastre]
     colors = ['#4B6A9B', '#63ACE5', '#7BC043', '#FF6F61']
@@ -105,7 +114,7 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     ax0.set_ylim(0, max(values)*1.25)
     ax0.grid(axis='y', linestyle='--', alpha=0.4)
 
-    # mapa arrastre/friccion
+    # Mapa 1
     im1 = ax1.imshow(riesgo_arrastre, extent=[alturas.min(), alturas.max(), velocidades.min(), velocidades.max()],
                      origin='lower', aspect='auto', cmap=cmap_riesgo)
     ax1.scatter(altura_agua, velocidad_agua, color='black', s=40, zorder=6)
@@ -114,7 +123,7 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     ax1.set_ylabel("Velocidad [m/s]")
     plt.colorbar(im1, ax=ax1, orientation='vertical', label='Arrastre / Fricción')
 
-    # mapa empuje/peso
+    # Mapa 2
     im2 = ax2.imshow(riesgo_empuje, extent=[alturas.min(), alturas.max(), velocidades.min(), velocidades.max()],
                      origin='lower', aspect='auto', cmap=cmap_riesgo)
     ax2.scatter(altura_agua, velocidad_agua, color='black', s=40, zorder=6)
@@ -122,6 +131,10 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     ax2.set_xlabel("Altura del Agua [m]")
     ax2.set_ylabel("Velocidad [m/s]")
     plt.colorbar(im2, ax=ax2, orientation='vertical', label='Empuje / Peso')
+
+    # Mostrar imagen pie
+    ax_pie.imshow(img_pie)
+    ax_pie.axis("off")
 
     return fig, {
         "empuje": empuje,
@@ -131,6 +144,7 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
         "se_mueve": se_mueve,
         "se_flota": se_flota
     }
+
 
 # Mostrar plots y texto
 fig, metrics = generar_plots_y_texto(altura_agua, velocidad_agua)
@@ -161,3 +175,4 @@ buf = io.BytesIO()
 fig.savefig(buf, format="png", dpi=150)
 buf.seek(0)
 st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+
