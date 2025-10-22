@@ -155,7 +155,50 @@ else:
     diag.append("🛑 **El vehículo se mantiene inmóvil (fricción suficiente).**")
 
 st.markdown("\n\n".join(diag))
+####
+from PIL import Image
 
+# --- Archivos ---
+img_grafico = "grafico.png"
+img_encabezado = "encabezado.png"
+img_pie = "pie.png"
+img_salida = "grafico_final.png"
+
+# --- Abrir imágenes ---
+encabezado = Image.open(img_encabezado)
+grafico = Image.open(img_grafico)
+pie = Image.open(img_pie)
+
+# --- Usar el ancho del gráfico como referencia ---
+ancho_final = grafico.width
+
+# Escalar encabezado y pie manteniendo proporción
+ratio_enc = ancho_final / encabezado.width
+ratio_pie = ancho_final / pie.width
+nuevo_alto_enc = int(encabezado.height * ratio_enc)
+nuevo_alto_pie = int(pie.height * ratio_pie)
+
+encabezado = encabezado.resize((ancho_final, nuevo_alto_enc))
+pie = pie.resize((ancho_final, nuevo_alto_pie))
+
+# --- Calcular alto total ---
+alto_total = nuevo_alto_enc + grafico.height + nuevo_alto_pie
+
+# --- Crear nueva imagen ---
+imagen_final = Image.new("RGB", (ancho_final, alto_total), (255, 255, 255))
+
+# --- Pegar en orden ---
+y_offset = 0
+imagen_final.paste(encabezado, (0, y_offset))
+y_offset += nuevo_alto_enc
+imagen_final.paste(grafico, (0, y_offset))
+y_offset += grafico.height
+imagen_final.paste(pie, (0, y_offset))
+
+# --- Guardar ---
+imagen_final.save(img_salida, dpi=(300, 300))
+print("✅ Imagen final generada correctamente:", img_salida)
+####
 # --- Crear imagen final con encabezado y pie de página ---
 from PIL import Image
 import matplotlib.image as mpimg
@@ -205,5 +248,6 @@ st.download_button(
     file_name="analisis_flotacion_deslizamiento.png",
     mime="image/png"
 )
+
 
 
