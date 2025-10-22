@@ -156,8 +156,54 @@ else:
 
 st.markdown("\n\n".join(diag))
 
-# Botón para descargar la imagen
-buf = io.BytesIO()
-fig.savefig(buf, format="png", dpi=150)
-buf.seek(0)
-st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+# --- Crear imagen final con encabezado y pie de página ---
+from PIL import Image
+import matplotlib.image as mpimg
+
+# Guardar el gráfico actual en memoria (solo el gráfico)
+buf_fig = io.BytesIO()
+fig.savefig(buf_fig, format="png", dpi=150, bbox_inches="tight")
+buf_fig.seek(0)
+img_fig = Image.open(buf_fig)
+
+# Cargar encabezado y pie (deben existir en la carpeta del script)
+encabezado = Image.open("encabezado.png")   # parte superior institucional
+pie = Image.open("pie.png")                 # parte inferior con redes y QR
+
+# Asegurar mismo ancho (por si difieren)
+ancho_final = max(encabezado.width, img_fig.width, pie.width)
+def redimensionar(img):
+    if img.width != ancho_final:
+        ratio = ancho_final / img.width
+        new_height = int(img.height * ratio)
+        return img.resize((ancho_final, new_height))
+    return img
+
+encabezado = redimensionar(encabezado)
+img_fig = redimensionar(img_fig)
+pie = redimensionar(pie)
+
+# Combinar todo en una sola imagen final
+alto_total = encabezado.height + img_fig.height + pie.height
+img_final = Image.new("RGB", (ancho_final, alto_total), color=(255,255,255))
+
+# Pegar en orden vertical
+y = 0
+img_final.paste(encabezado, (0, y)); y += encabezado.height
+img_final.paste(img_fig, (0, y)); y += img_fig.height
+img_final.paste(pie, (0, y))
+
+# Guardar en buffer final
+buf_final = io.BytesIO()
+img_final.save(buf_final, format="PNG", dpi=(150,150))
+buf_final.seek(0)
+
+# Botón de descarga
+st.download_button(
+    label="Descargar gráfico completo (PNG)",
+    data=buf_final,
+    file_name="analisis_flotacion_deslizamiento.png",
+    mime="image/png"
+)
+
+
