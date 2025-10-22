@@ -74,7 +74,7 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     se_mueve = fuerza_arrastre > friccion
     se_flota = empuje > peso
 
-    alturas = np.linspace(0.01, 1.8, 200)
+    alturas = np.linspace(0.01, 2.0, 200)
     velocidades = np.linspace(0.01, 6.0, 200)
     A, V = np.meshgrid(alturas, velocidades)
     altura_sum = np.maximum(0, A - altura_libre_suelo)
@@ -175,4 +175,5 @@ buf = io.BytesIO()
 fig.savefig(buf, format="png", dpi=150)
 buf.seek(0)
 st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+
 
