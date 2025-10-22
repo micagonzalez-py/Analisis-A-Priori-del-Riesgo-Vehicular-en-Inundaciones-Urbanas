@@ -38,9 +38,9 @@ alto_auto = st.sidebar.number_input("Alto (m)", value=DEFAULTS["alto_auto"], ste
 
 st.sidebar.markdown("---")
 st.sidebar.header("Parámetros hidrodinámicos")
-porcentaje_flotante = st.sidebar.slider("Porcentaje flotante (factor)", 0.0, 1.0, DEFAULTS["porcentaje_flotante"], step=0.01)
-Cd = st.sidebar.slider("Coef. arrastre Cd", 0.1, 3.0, DEFAULTS["Cd"], step=0.01)
-mu = st.sidebar.slider("Coef. fricción (μ)", 0.0, 1.5, DEFAULTS["mu"], step=0.01)
+porcentaje_flotante = st.sidebar.slider("Porcentaje flotante (factor)", 0.5, 1.0, DEFAULTS["porcentaje_flotante"], step=0.01)
+Cd = st.sidebar.slider("Coef. arrastre Cd", 0.5, 1.5, DEFAULTS["Cd"], step=0.01)
+mu = st.sidebar.slider("Coef. fricción (μ)", 0.2, 1.5, DEFAULTS["mu"], step=0.01)
 
 # --- inputs principales en la página (fáciles de usar en móviles) ---
 st.subheader("Condición de la inundación")
@@ -175,5 +175,6 @@ buf = io.BytesIO()
 fig.savefig(buf, format="png", dpi=150)
 buf.seek(0)
 st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+
 
 
