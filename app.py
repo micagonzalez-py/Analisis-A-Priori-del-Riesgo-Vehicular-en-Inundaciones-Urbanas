@@ -172,9 +172,10 @@ st.markdown("\n\n".join(diag))
 
 # Botón para descargar la imagen
 buf = io.BytesIO()
-fig.savefig(buf, format="png", dpi=150)
+fig.savefig(buf, format="png", dpi=300)
 buf.seek(0)
 st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+
 
 
 
