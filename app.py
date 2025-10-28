@@ -4,15 +4,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import io
-# tamanjo de titulos
+# tamanho de titulos
 tam1 = 18
 tam2 = 15
-tam3 = 9
+tam3 = 11
 # --- constantes físicas ---
 g = 9.81  # m/s²
 densidad_agua = 1000  # kg/m³
 
-# --- valores por defecto (los tuyos) ---
+# --- valores por defecto  ---
 DEFAULTS = {
     "altura_libre_suelo": 0.28,
     "masa_auto": 3000,
@@ -58,7 +58,7 @@ area_base = largo_auto * ancho_auto
 area_frontal = alto_auto * ancho_auto
 peso = masa_auto * g
 
-# Función que genera todo (plots + diagnóstico) - adaptada de tu código
+# Función que genera todo (plots + diagnóstico) 
 import matplotlib.image as mpimg
 
 def generar_plots_y_texto(altura_agua, velocidad_agua):
@@ -192,6 +192,7 @@ st.download_button(
     # 3. Cambia el tipo MIME
     mime="image/svg+xml"
 )
+
 
 
 
