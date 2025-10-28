@@ -193,6 +193,11 @@ st.download_button(
     mime="image/svg+xml"
 )
 
+# Botón para descargar la imagen en png
+buf = io.BytesIO()
+fig.savefig(buf, format="png", dpi=150)
+buf.seek(0)
+st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
 
 
 
