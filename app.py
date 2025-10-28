@@ -100,8 +100,8 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     ax_encabezado, ax0, ax1, ax2, ax_pie = axes
 
     # Mostrar imagen encabezado
-####    ax_encabezado.imshow(img_encabezado)
-####    ax_encabezado.axis("off")
+    ax_encabezado.imshow(img_encabezado)
+    ax_encabezado.axis("off")
 
     # Gráfico de barras
     labels = ['Peso', 'F. Empuje', 'F. Fricción', 'F. Arrastre']
@@ -137,8 +137,8 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     plt.colorbar(im2, ax=ax2, orientation='vertical', label='Empuje / Peso')
 
     # Mostrar imagen pie
-####    ax_pie.imshow(img_pie)
-####    ax_pie.axis("off")
+    ax_pie.imshow(img_pie)
+    ax_pie.axis("off")
 
     return fig, {
         "empuje": empuje,
@@ -192,6 +192,7 @@ st.download_button(
     # 3. Cambia el tipo MIME
     mime="image/svg+xml"
 )
+
 
 
 
