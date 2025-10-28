@@ -7,7 +7,7 @@ import io
 # tamanho de titulos
 tam1 = 18
 tam2 = 15
-tam3 = 11
+tam3 = 13
 # --- constantes físicas ---
 g = 9.81  # m/s²
 densidad_agua = 1000  # kg/m³
@@ -192,6 +192,7 @@ st.download_button(
     # 3. Cambia el tipo MIME
     mime="image/svg+xml"
 )
+
 
 
 
