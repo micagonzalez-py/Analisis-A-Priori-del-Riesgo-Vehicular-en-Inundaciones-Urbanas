@@ -4,7 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import io
-
+# tamanjo de titulos
+tam1 = 16
+tam2 = 14
 # --- constantes físicas ---
 g = 9.81  # m/s²
 densidad_agua = 1000  # kg/m³
@@ -105,8 +107,8 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     values = [peso, empuje, friccion, fuerza_arrastre]
     colors = ['#4B6A9B', '#63ACE5', '#7BC043', '#FF6F61']
     bars = ax0.bar(labels, values, color=colors, edgecolor="black", alpha=0.95)
-    ax0.set_ylabel("Fuerza (N)")
-    ax0.set_title(f"Altura Agua: {altura_agua:.2f} m  |  Velocidad: {velocidad_agua:.2f} m/s")
+    ax0.set_ylabel("Fuerza (N)", fontsize = tam2)
+    ax0.set_title(f"Altura Agua: {altura_agua:.2f} m  |  Velocidad: {velocidad_agua:.2f} m/s", fontsize = tam1)
     for bar in bars:
         yval = bar.get_height()
         ax0.text(bar.get_x() + bar.get_width()/2.0, yval + max(values)*0.03,
@@ -118,18 +120,18 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     im1 = ax1.imshow(riesgo_arrastre, extent=[alturas.min(), alturas.max(), velocidades.min(), velocidades.max()],
                      origin='lower', aspect='auto', cmap=cmap_riesgo)
     ax1.scatter(altura_agua, velocidad_agua, color='black', s=40, zorder=6)
-    ax1.set_title("Mapa de Riesgo: Arrastre / Fricción")
-    ax1.set_xlabel("Altura del Agua [m]", fontsize = 14)
-    ax1.set_ylabel("Velocidad [m/s]", fontsize = 14)
+    ax1.set_title("Mapa de Riesgo: Arrastre / Fricción", fontsize = tam1)
+    ax1.set_xlabel("Altura del Agua [m]", fontsize = tam2)
+    ax1.set_ylabel("Velocidad [m/s]", fontsize = tam2)
     plt.colorbar(im1, ax=ax1, orientation='vertical', label='Arrastre / Fricción')
 
     # Mapa 2
     im2 = ax2.imshow(riesgo_empuje, extent=[alturas.min(), alturas.max(), velocidades.min(), velocidades.max()],
                      origin='lower', aspect='auto', cmap=cmap_riesgo)
     ax2.scatter(altura_agua, velocidad_agua, color='black', s=40, zorder=6)
-    ax2.set_title("Mapa de Riesgo: Empuje / Peso")
-    ax2.set_xlabel("Altura del Agua [m]")
-    ax2.set_ylabel("Velocidad [m/s]")
+    ax2.set_title("Mapa de Riesgo: Empuje / Peso", fontsize = tam1)
+    ax2.set_xlabel("Altura del Agua [m]", fontsize = tam2)
+    ax2.set_ylabel("Velocidad [m/s]", fontsize = tam2)
     plt.colorbar(im2, ax=ax2, orientation='vertical', label='Empuje / Peso')
 
     # Mostrar imagen pie
@@ -175,6 +177,7 @@ buf = io.BytesIO()
 fig.savefig(buf, format="png", dpi=300)
 buf.seek(0)
 st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+
 
 
 
