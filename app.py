@@ -7,6 +7,7 @@ import io
 # tamanjo de titulos
 tam1 = 18
 tam2 = 15
+tam3 = 9
 # --- constantes físicas ---
 g = 9.81  # m/s²
 densidad_agua = 1000  # kg/m³
@@ -112,9 +113,10 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     for bar in bars:
         yval = bar.get_height()
         ax0.text(bar.get_x() + bar.get_width()/2.0, yval + max(values)*0.03,
-                 f'{yval:,.0f}', ha='center', va='bottom', fontsize=tam2)
+                 f'{yval:,.0f}', ha='center', va='bottom', fontsize=tam3)
     ax0.set_ylim(0, max(values)*1.25)
     ax0.grid(axis='y', linestyle='--', alpha=0.4)
+    ax0.tick_params(axis='x', labelsize=tam2)
 
     # Mapa 1
     im1 = ax1.imshow(riesgo_arrastre, extent=[alturas.min(), alturas.max(), velocidades.min(), velocidades.max()],
@@ -177,6 +179,7 @@ buf = io.BytesIO()
 fig.savefig(buf, format="png", dpi=300)
 buf.seek(0)
 st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+
 
 
 
