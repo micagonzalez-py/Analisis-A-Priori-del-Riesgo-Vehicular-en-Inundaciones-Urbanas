@@ -119,8 +119,8 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
                      origin='lower', aspect='auto', cmap=cmap_riesgo)
     ax1.scatter(altura_agua, velocidad_agua, color='black', s=40, zorder=6)
     ax1.set_title("Mapa de Riesgo: Arrastre / Fricción")
-    ax1.set_xlabel("Altura del Agua [m]")
-    ax1.set_ylabel("Velocidad [m/s]")
+    ax1.set_xlabel("Altura del Agua [m]", fontsize = 14)
+    ax1.set_ylabel("Velocidad [m/s]", fontsize = 14)
     plt.colorbar(im1, ax=ax1, orientation='vertical', label='Arrastre / Fricción')
 
     # Mapa 2
@@ -175,6 +175,7 @@ buf = io.BytesIO()
 fig.savefig(buf, format="png", dpi=300)
 buf.seek(0)
 st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+
 
 
 
