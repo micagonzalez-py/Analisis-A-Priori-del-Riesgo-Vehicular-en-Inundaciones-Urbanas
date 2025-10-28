@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import io
 # tamanjo de titulos
-tam1 = 16
+tam1 = 18
 tam2 = 15
 # --- constantes físicas ---
 g = 9.81  # m/s²
@@ -177,6 +177,7 @@ buf = io.BytesIO()
 fig.savefig(buf, format="png", dpi=300)
 buf.seek(0)
 st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+
 
 
 
