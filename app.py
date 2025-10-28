@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import io
 # tamanho de titulos
-tam1 = 18
-tam2 = 15
-tam3 = 13
+tam1 = 19
+tam2 = 16
+tam3 = 14
 # --- constantes físicas ---
 g = 9.81  # m/s²
 densidad_agua = 1000  # kg/m³
@@ -192,6 +192,7 @@ st.download_button(
     # 3. Cambia el tipo MIME
     mime="image/svg+xml"
 )
+
 
 
 
