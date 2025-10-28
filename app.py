@@ -112,7 +112,7 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     for bar in bars:
         yval = bar.get_height()
         ax0.text(bar.get_x() + bar.get_width()/2.0, yval + max(values)*0.03,
-                 f'{yval:,.0f}', ha='center', va='bottom', fontsize=9)
+                 f'{yval:,.0f}', ha='center', va='bottom', fontsize=tam2)
     ax0.set_ylim(0, max(values)*1.25)
     ax0.grid(axis='y', linestyle='--', alpha=0.4)
 
@@ -177,6 +177,7 @@ buf = io.BytesIO()
 fig.savefig(buf, format="png", dpi=300)
 buf.seek(0)
 st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
+
 
 
 
