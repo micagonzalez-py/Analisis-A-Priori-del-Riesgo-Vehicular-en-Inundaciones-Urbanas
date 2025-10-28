@@ -100,8 +100,8 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     ax_encabezado, ax0, ax1, ax2, ax_pie = axes
 
     # Mostrar imagen encabezado
-    ax_encabezado.imshow(img_encabezado)
-    ax_encabezado.axis("off")
+####    ax_encabezado.imshow(img_encabezado)
+####    ax_encabezado.axis("off")
 
     # Gráfico de barras
     labels = ['Peso', 'F. Empuje', 'F. Fricción', 'F. Arrastre']
@@ -137,8 +137,8 @@ def generar_plots_y_texto(altura_agua, velocidad_agua):
     plt.colorbar(im2, ax=ax2, orientation='vertical', label='Empuje / Peso')
 
     # Mostrar imagen pie
-    ax_pie.imshow(img_pie)
-    ax_pie.axis("off")
+####    ax_pie.imshow(img_pie)
+####    ax_pie.axis("off")
 
     return fig, {
         "empuje": empuje,
@@ -174,13 +174,24 @@ else:
 
 st.markdown("\n\n".join(diag))
 
-# Botón para descargar la imagen
+
+
+import io
+
+# Botón para descargar la imagen en SVG (Máxima Calidad)
 buf = io.BytesIO()
-fig.savefig(buf, format="png", dpi=300)
+# 1. Guarda en formato SVG
+fig.savefig(buf, format="svg", bbox_inches='tight')
 buf.seek(0)
-st.download_button("Descargar gráfico (PNG)", buf, file_name="riesgo_flotacion_deslizamiento.png", mime="image/png")
 
-
+st.download_button(
+    "Descargar gráfico (SVG)", 
+    buf, 
+    # 2. Cambia la extensión del archivo
+    file_name="riesgo_flotacion_deslizamiento.svg", 
+    # 3. Cambia el tipo MIME
+    mime="image/svg+xml"
+)
 
 
 
